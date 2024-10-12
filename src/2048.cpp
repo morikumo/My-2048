@@ -1,10 +1,21 @@
 #include "../header/2048.hpp"
 
+Game::Game()
+{
+    grille = vector<vector<int>>(GRID_SIZE, vector<int>(GRID_SIZE, 0));
+    generateRandomNumberAndPutItOnGrid();
+    generateRandomNumberAndPutItOnGrid();
+}
 
-std::ostream& operator<<(std::ostream &out, const Game &game) {
-    for (int i = 0; i < GRID_SIZE; ++i) {
-        for (int j = 0; j < GRID_SIZE; ++j) {
-            out << game.grille[i][j] << "\t"; 
+// Surcharge de l'opérateur << pour afficher la grille
+std::ostream &operator<<(std::ostream &out, const Game &game)
+{
+    out << "Grille actuelle : " << endl;
+    for (int i = 0; i < GRID_SIZE; ++i)
+    {
+        for (int j = 0; j < GRID_SIZE; ++j)
+        {
+            out << game.grille[i][j] << "\t"; // Affichage de la grille avec des tabulations pour aligner
         }
         out << "\n";
     }
@@ -13,8 +24,6 @@ std::ostream& operator<<(std::ostream &out, const Game &game) {
 
 void Game::makeMove(const int direction)
 {
-
-    cout << "Your arrow is: " << direction << endl;
 
     switch (direction)
     {
@@ -30,25 +39,51 @@ void Game::makeMove(const int direction)
     case DOWN:
         down();
         break;
+    case SALEM:
+        cout << BOLDYELLOW << "Goodbye !" << RESET << endl;
+        break;
+    default:
+        cout << BOLDRED << "Wrong input, stupid !" << RESET << endl;
+        break;
     }
 }
 
 void Game::left()
 {
-    cout << "we go to the left" << endl;
+    cout << BOLDCYAN << "We go to the left" << RESET << endl;
+    generateRandomNumberAndPutItOnGrid();
 }
 
 void Game::right()
 {
-    cout << "we go to the right" << endl;
+    cout << BOLDCYAN << "We go to the right" << RESET << endl;
 }
 
 void Game::up()
 {
-    cout << "we go to the up" << endl;
+    cout << BOLDCYAN << "We go to the up" << RESET << endl;
 }
 
 void Game::down()
 {
-    cout << "we go to the down" << endl;
+    cout << BOLDCYAN << "We go to the down" << RESET << endl;
+}
+
+void Game::generateRandomNumberAndPutItOnGrid()
+{
+    srand(time(0));
+    int value = (rand() % 10 == 0) ? 4 : 2;
+
+    int random1 = (rand() % GRID_SIZE);
+    int random2 = (rand() % GRID_SIZE);
+
+    cout << "Rand index 1: " << random1 << endl;
+    cout << "Rand index 2: " << random2 << endl;
+
+    while (grille[random1][random2] != 0)
+    {
+        random1 = (rand() % GRID_SIZE);
+        random2 = (rand() % GRID_SIZE);
+    }
+    grille[random1][random2] = value;
 }

@@ -2,10 +2,11 @@ NAME = 2048
 
 CC = g++
 RM = rm -rf
-FLAGS = -Wextra -Wall -Werror -lGLEW -lglfw -lGL -lGLU
+FLAGS = 
 
 # Définir les fichiers source et les objets
-SRC_FILES = ./src/main.cpp
+SRC_FILES = ./src/2048.cpp ./src/main.cpp
+
 OBJS = $(patsubst ./src/%.cpp, $(OBJS_F)%.o, $(SRC_FILES))
 OBJS_F = _objFiles/
 
