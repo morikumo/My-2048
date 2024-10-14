@@ -51,22 +51,96 @@ void Game::makeMove(const int direction)
 void Game::left()
 {
     cout << BOLDCYAN << "We go to the left" << RESET << endl;
+    // Parcourir les lignes
+    for (int i = 0; i < GRID_SIZE; i++)
+    {
+        // Nouvelle index pour deplacer les element, qui repasse a zero apres chaque lignes
+        int new_index = 0;
+        // Parcourir les colonnes
+        for (int j = 0; j < GRID_SIZE; j++)
+        {
+            // Je vais ici : si le nombre a l'index [i][j] est different de 0 l'affiler a new index pour l'effet de deplacement
+            if (grille[i][j] != 0)
+            {
+                grille[i][new_index] = grille[i][j];
+                // Changer la valeur de ou était la position par 0
+                if (new_index != j)
+                {
+                    grille[i][j] = 0;
+                }
+                // On incremente newIndex pour que le prochain nombre trouvé soit placé dans la case suivante vers la droite.
+                new_index++;
+            }
+        }
+    }
     generateRandomNumberAndPutItOnGrid();
 }
 
 void Game::right()
 {
     cout << BOLDCYAN << "We go to the right" << RESET << endl;
+    // La partie pour aller a droite
+    for (int i = GRID_SIZE - 1; i >= 0; i--)
+    {
+        int new_index = GRID_SIZE - 1;
+        for (int j = GRID_SIZE - 1; j >= 0; j--)
+        {
+            if (grille[i][j] != 0)
+            {
+                grille[i][new_index] = grille[i][j];
+                if (new_index != j)
+                {
+                    grille[i][j] = 0;
+                }
+                new_index--;
+            }
+        }
+    }
+    generateRandomNumberAndPutItOnGrid();
 }
 
 void Game::up()
 {
     cout << BOLDCYAN << "We go to the up" << RESET << endl;
+    for (int i = 0; i < GRID_SIZE; i++)
+    {
+        int new_index = 0;
+        for (int j = 0; j < GRID_SIZE; j++)
+        {
+            if (grille[j][i] != 0)
+            {
+                grille[new_index][i] = grille[j][i];
+                if (new_index != j)
+                {
+                    grille[j][i] = 0;
+                }
+                new_index++;
+            }
+        }
+    }
+    generateRandomNumberAndPutItOnGrid();
 }
 
 void Game::down()
 {
     cout << BOLDCYAN << "We go to the down" << RESET << endl;
+    for (int i = GRID_SIZE - 1; i >= 0; i--)
+    {
+        int new_index = GRID_SIZE - 1;
+        for (int j = GRID_SIZE - 1; j >= 0; j--)
+        {
+            if (grille[j][i] != 0)
+            {
+                grille[new_index][i] = grille[j][i];
+                if (new_index != j)
+                {
+                    grille[j][i] = 0;
+                }
+                new_index--;
+            }
+        }
+    }
+    generateRandomNumberAndPutItOnGrid();
 }
 
 void Game::generateRandomNumberAndPutItOnGrid()
