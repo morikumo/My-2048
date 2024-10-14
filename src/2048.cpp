@@ -28,7 +28,7 @@ void Game::makeMove(const int direction)
     switch (direction)
     {
     case LEFT:
-        left();
+        mergedLeft();
         break;
     case RIGHT:
         right();
@@ -46,6 +46,22 @@ void Game::makeMove(const int direction)
         cout << BOLDRED << "Wrong input, stupid !" << RESET << endl;
         break;
     }
+}
+
+void Game::mergedLeft()
+{
+    for (int i = 0; i < GRID_SIZE; ++i)
+    {
+        for (int j = 0; j < GRID_SIZE - 1; ++j)
+        {
+            if (grille[i][j] != 0 && grille[i][j] == grille[i][j + 1])
+            {
+                grille[i][j] *= 2;
+                grille[i][j + 1] = 0;
+            }
+        }
+    }
+    left();
 }
 
 void Game::left()
@@ -76,10 +92,13 @@ void Game::left()
     generateRandomNumberAndPutItOnGrid();
 }
 
+/**
+ * @brief Go to the right
+ *
+ */
 void Game::right()
 {
     cout << BOLDCYAN << "We go to the right" << RESET << endl;
-    // La partie pour aller a droite
     for (int i = GRID_SIZE - 1; i >= 0; i--)
     {
         int new_index = GRID_SIZE - 1;

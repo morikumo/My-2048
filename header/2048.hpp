@@ -48,6 +48,7 @@ class Game{
         void up();
         void down();
         void left();
+        void mergedLeft();
         void right();
         void generateRandomNumberAndPutItOnGrid();
         vector<vector<int>> grille;
