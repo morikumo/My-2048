@@ -46,10 +46,13 @@ class Game{
 
     private:
         void up();
+        void mergedUp();
         void down();
+        void mergedDown();
         void left();
         void mergedLeft();
         void right();
+        void mergedRight();
         void generateRandomNumberAndPutItOnGrid();
         vector<vector<int>> grille;
 };

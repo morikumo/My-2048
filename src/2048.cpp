@@ -11,14 +11,16 @@ Game::Game()
 std::ostream &operator<<(std::ostream &out, const Game &game)
 {
     out << "Grille actuelle : " << endl;
+    out << "-----------------------------------------------------------------" << endl;
     for (int i = 0; i < GRID_SIZE; ++i)
     {
         for (int j = 0; j < GRID_SIZE; ++j)
         {
-            out << game.grille[i][j] << "\t"; // Affichage de la grille avec des tabulations pour aligner
+            out << "\t" <<game.grille[i][j] << "\t" << "|"; // Affichage de la grille avec des tabulations pour aligner 
         }
         out << "\n";
     }
+    out << "-----------------------------------------------------------------" << endl;
     return out;
 }
 
@@ -31,7 +33,7 @@ void Game::makeMove(const int direction)
         mergedLeft();
         break;
     case RIGHT:
-        right();
+        mergedRight();
         break;
     case UP:
         up();
@@ -50,6 +52,7 @@ void Game::makeMove(const int direction)
 
 void Game::mergedLeft()
 {
+    left();
     for (int i = 0; i < GRID_SIZE; ++i)
     {
         for (int j = 0; j < GRID_SIZE - 1; ++j)
@@ -61,7 +64,7 @@ void Game::mergedLeft()
             }
         }
     }
-    left();
+    generateRandomNumberAndPutItOnGrid();
 }
 
 void Game::left()
@@ -89,13 +92,25 @@ void Game::left()
             }
         }
     }
+}
+
+void Game::mergedRight()
+{
+    right();
+    for (int i = GRID_SIZE - 1; i >= 0; i--)
+    {
+        for (int j = GRID_SIZE - 1; j >= 0; j--)
+        {
+            if (grille[i][j] != 0 && grille[i][j] == grille[i][j - 1])
+            {
+                grille[i][j] *= 2;
+                grille[i][j - 1] = 0;
+            }
+        }
+    }
     generateRandomNumberAndPutItOnGrid();
 }
 
-/**
- * @brief Go to the right
- *
- */
 void Game::right()
 {
     cout << BOLDCYAN << "We go to the right" << RESET << endl;
