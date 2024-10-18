@@ -36,7 +36,7 @@ void Game::makeMove(const int direction)
         mergedRight();
         break;
     case UP:
-        up();
+        mergedUp();
         break;
     case DOWN:
         down();
@@ -127,6 +127,23 @@ void Game::right()
                     grille[i][j] = 0;
                 }
                 new_index--;
+            }
+        }
+    }
+    generateRandomNumberAndPutItOnGrid();
+}
+
+void Game::mergedUp()
+{
+    up();
+    for (int i = 0; i < GRID_SIZE; i++)
+    {
+        for (int j = 0; j < GRID_SIZE - 1; j++)
+        {
+            if (grille[j][i] != 0 && grille[j][i] == grille[j + 1][i])
+            {
+                grille[j][i] *= 2;
+                grille[j + 1][i] = 0;
             }
         }
     }
