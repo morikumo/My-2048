@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <iomanip> // Pour std::setw
 
 #define RESET "\033[0m"
 #define BLACK "\033[30m"              /* Black */

@@ -10,19 +10,22 @@ Game::Game()
 // Surcharge de l'opérateur << pour afficher la grille
 std::ostream &operator<<(std::ostream &out, const Game &game)
 {
-    out << "Grille actuelle : " << endl;
-    out << "-----------------------------------------------------------------" << endl;
+    out << "Grille actuelle : " << std::endl;
+    out << "----------------------------" << std::endl;
     for (int i = 0; i < GRID_SIZE; ++i)
     {
+        out << "|"; // Début de la ligne
         for (int j = 0; j < GRID_SIZE; ++j)
         {
-            out << "\t" << BOLDWHITE << game.grille[i][j] << RESET << "\t" << "|"; // Affichage de la grille avec des tabulations pour aligner
+            out << " " << BOLDWHITE << std::setw(3) << game.grille[i][j] << RESET << " "; // Affichage avec un espace pour l'alignement
+            out << "|"; // Séparateur entre les cellules
         }
-        out << "\n";
+        out << std::endl;
+        out << "----------------------------" << std::endl; // Ligne de séparation
     }
-    out << "-----------------------------------------------------------------" << endl;
     return out;
 }
+
 
 void Game::makeMove(const int direction)
 {
