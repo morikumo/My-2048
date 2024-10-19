@@ -16,7 +16,7 @@ std::ostream &operator<<(std::ostream &out, const Game &game)
     {
         for (int j = 0; j < GRID_SIZE; ++j)
         {
-            out << "\t" <<game.grille[i][j] << "\t" << "|"; // Affichage de la grille avec des tabulations pour aligner 
+            out << "\t" << BOLDWHITE << game.grille[i][j] << RESET <<"\t" << "|"; // Affichage de la grille avec des tabulations pour aligner 
         }
         out << "\n";
     }
@@ -39,7 +39,7 @@ void Game::makeMove(const int direction)
         mergedUp();
         break;
     case DOWN:
-        down();
+        mergedDown();
         break;
     case SALEM:
         cout << BOLDYELLOW << "Goodbye !" << RESET << endl;
@@ -64,6 +64,7 @@ void Game::mergedLeft()
             }
         }
     }
+    left();
     generateRandomNumberAndPutItOnGrid();
 }
 
@@ -108,6 +109,7 @@ void Game::mergedRight()
             }
         }
     }
+    right();
     generateRandomNumberAndPutItOnGrid();
 }
 
@@ -130,7 +132,6 @@ void Game::right()
             }
         }
     }
-    generateRandomNumberAndPutItOnGrid();
 }
 
 void Game::mergedUp()
@@ -147,6 +148,7 @@ void Game::mergedUp()
             }
         }
     }
+    up();
     generateRandomNumberAndPutItOnGrid();
 }
 
@@ -169,7 +171,24 @@ void Game::up()
             }
         }
     }
-    generateRandomNumberAndPutItOnGrid();
+}
+
+void Game::mergedDown()
+{
+    down();
+    for (int i = GRID_SIZE - 1; i >= 0; --i)
+    {
+        for (int j = GRID_SIZE - 1; j >= 0; --j)
+        {
+            if (grille[j][i] != 0 && grille[j][i] == grille[j - 1][i])
+            {
+                grille[j][i] *= 2;
+                grille[j - 1][i] = 0;
+            }
+        }
+    }
+    down();
+    generateRandomNumberAndPutItOnGrid();   
 }
 
 void Game::down()
@@ -191,7 +210,6 @@ void Game::down()
             }
         }
     }
-    generateRandomNumberAndPutItOnGrid();
 }
 
 void Game::generateRandomNumberAndPutItOnGrid()
