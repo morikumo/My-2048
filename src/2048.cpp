@@ -267,3 +267,27 @@ bool Game::checkLoose()
     }
     return true;
 }
+
+/*
+bool Game::mergedLeft()
+{
+    bool moved = false; // Variable pour suivre si un mouvement a eu lieu
+    left();
+    for (int i = 0; i < GRID_SIZE; ++i)
+    {
+        for (int j = 0; j < GRID_SIZE - 1; ++j)
+        {
+            if (grille[i][j] != 0 && grille[i][j] == grille[i][j + 1])
+            {
+                grille[i][j] *= 2;
+                grille[i][j + 1] = 0;
+                moved = true; // Un mouvement a eu lieu
+            }
+        }
+    }
+    left();
+    // Vérifiez si un mouvement a eu lieu dans la méthode left
+    return moved || (/* condition pour vérifier si quelque chose a été déplacé dans left() );
+}
+
+*/
