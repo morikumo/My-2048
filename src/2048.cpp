@@ -16,7 +16,7 @@ std::ostream &operator<<(std::ostream &out, const Game &game)
     {
         for (int j = 0; j < GRID_SIZE; ++j)
         {
-            out << "\t" << BOLDWHITE << game.grille[i][j] << RESET <<"\t" << "|"; // Affichage de la grille avec des tabulations pour aligner 
+            out << "\t" << BOLDWHITE << game.grille[i][j] << RESET << "\t" << "|"; // Affichage de la grille avec des tabulations pour aligner
         }
         out << "\n";
     }
@@ -188,7 +188,7 @@ void Game::mergedDown()
         }
     }
     down();
-    generateRandomNumberAndPutItOnGrid();   
+    generateRandomNumberAndPutItOnGrid();
 }
 
 void Game::down()
@@ -229,4 +229,38 @@ void Game::generateRandomNumberAndPutItOnGrid()
         random2 = (rand() % GRID_SIZE);
     }
     grille[random1][random2] = value;
+}
+
+bool Game::checkWin()
+{
+    for (int i = 0; i < GRID_SIZE; ++i)
+    {
+        for (int j = 0; j < GRID_SIZE; ++j)
+        {
+            if (grille[i][j] == TARGET)
+                return true;
+        }
+    }
+    return false;
+}
+
+bool Game::checkLoose()
+{
+    for (int i = 0; i < GRID_SIZE; ++i)
+    {
+        for (int j = 0; j < GRID_SIZE; ++j)
+        {
+            if (grille[i][j] == 0)
+                return false;
+            if (i > 0 && grille[i][j] == grille[i - 1][j])
+                return false;
+            if (i < GRID_SIZE - 1 && grille[i][j] == grille[i + 1][j])
+                return false;
+            if (j > 0 && grille[i][j] == grille[i][j - 1])
+                return false;
+            if (j < GRID_SIZE - 1 && grille[i][j] == grille[i][j + 1])
+                return false;
+        }
+    }
+    return true;
 }
