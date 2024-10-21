@@ -29,7 +29,6 @@ std::ostream &operator<<(std::ostream &out, const Game &game)
 
 void Game::makeMove(const int direction)
 {
-
     switch (direction)
     {
     case LEFT:
@@ -53,8 +52,27 @@ void Game::makeMove(const int direction)
     }
 }
 
+bool Game::canMoveLeft() {
+    for (int i = 0; i < GRID_SIZE; ++i) {
+        for (int j = 0; j < GRID_SIZE - 1; ++j) {
+            if (grille[i][j] != 0) {
+                if (grille[i][j + 1] == 0 || grille[i][j] == grille[i][j + 1]) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+
 void Game::mergedLeft()
 {
+    if (!canMoveLeft()) {
+        // Si aucun mouvement n'est possible, ne rien faire
+        return;
+    }
+
     left();
     for (int i = 0; i < GRID_SIZE; ++i)
     {

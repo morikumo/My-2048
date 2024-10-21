@@ -54,6 +54,7 @@ private:
     void mergedUp();
     void down();
     void mergedDown();
+    bool canMoveLeft();
     void left();
     void mergedLeft();
     void right();
