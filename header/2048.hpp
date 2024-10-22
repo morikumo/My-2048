@@ -50,14 +50,13 @@ public:
     friend std::ostream &operator<<(ostream &out, const Game &grid);
 
 private:
-    void up();
+    bool up();
     void mergedUp();
-    void down();
+    bool down();
     void mergedDown();
-    bool canMoveLeft();
-    void left();
+    bool left();
     void mergedLeft();
-    void right();
+    bool right();
     void mergedRight();
     void generateRandomNumberAndPutItOnGrid();
     vector<vector<int>> grille;

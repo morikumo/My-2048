@@ -17,15 +17,14 @@ std::ostream &operator<<(std::ostream &out, const Game &game)
         out << "|"; // Début de la ligne
         for (int j = 0; j < GRID_SIZE; ++j)
         {
-            out << " " << BOLDWHITE << std::setw(3) << game.grille[i][j] << RESET << " "; // Affichage avec un espace pour l'alignement
-            out << "|"; // Séparateur entre les cellules
+            out << " " << BOLDGREEN << std::setw(3) << game.grille[i][j] << RESET << " "; // Affichage avec un espace pour l'alignement
+            out << "|";                                                                   // Séparateur entre les cellules
         }
         out << std::endl;
         out << "----------------------------" << std::endl; // Ligne de séparation
     }
     return out;
 }
-
 
 void Game::makeMove(const int direction)
 {
@@ -52,28 +51,10 @@ void Game::makeMove(const int direction)
     }
 }
 
-bool Game::canMoveLeft() {
-    for (int i = 0; i < GRID_SIZE; ++i) {
-        for (int j = 0; j < GRID_SIZE - 1; ++j) {
-            if (grille[i][j] != 0) {
-                if (grille[i][j + 1] == 0 || grille[i][j] == grille[i][j + 1]) {
-                    return true;
-                }
-            }
-        }
-    }
-    return false;
-}
-
-
 void Game::mergedLeft()
 {
-    if (!canMoveLeft()) {
-        // Si aucun mouvement n'est possible, ne rien faire
-        return;
-    }
+    bool moved = left();
 
-    left();
     for (int i = 0; i < GRID_SIZE; ++i)
     {
         for (int j = 0; j < GRID_SIZE - 1; ++j)
@@ -82,43 +63,47 @@ void Game::mergedLeft()
             {
                 grille[i][j] *= 2;
                 grille[i][j + 1] = 0;
+                moved = true;
             }
         }
     }
-    left();
-    generateRandomNumberAndPutItOnGrid();
+
+    if (left())
+        moved = true;
+    if (moved)
+        generateRandomNumberAndPutItOnGrid();
 }
 
-void Game::left()
+bool Game::left()
 {
     cout << BOLDCYAN << "We go to the left" << RESET << endl;
-    // Parcourir les lignes
+    bool moved = false;
+
     for (int i = 0; i < GRID_SIZE; i++)
     {
-        // Nouvelle index pour deplacer les element, qui repasse a zero apres chaque lignes
         int new_index = 0;
-        // Parcourir les colonnes
         for (int j = 0; j < GRID_SIZE; j++)
         {
-            // Je vais ici : si le nombre a l'index [i][j] est different de 0 l'affiler a new index pour l'effet de deplacement
             if (grille[i][j] != 0)
             {
-                grille[i][new_index] = grille[i][j];
-                // Changer la valeur de ou était la position par 0
                 if (new_index != j)
                 {
+                    grille[i][new_index] = grille[i][j];
                     grille[i][j] = 0;
+                    moved = true; // Un déplacement a eu lieu
                 }
-                // On incremente newIndex pour que le prochain nombre trouvé soit placé dans la case suivante vers la droite.
                 new_index++;
             }
         }
     }
+
+    return moved; // Retourne true si un déplacement a eu lieu
 }
 
 void Game::mergedRight()
 {
-    right();
+    bool moved = right();
+
     for (int i = GRID_SIZE - 1; i >= 0; i--)
     {
         for (int j = GRID_SIZE - 1; j >= 0; j--)
@@ -130,13 +115,16 @@ void Game::mergedRight()
             }
         }
     }
-    right();
-    generateRandomNumberAndPutItOnGrid();
+    if(right())
+        moved = true;
+    if(moved)    
+        generateRandomNumberAndPutItOnGrid();
 }
 
-void Game::right()
+bool Game::right()
 {
     cout << BOLDCYAN << "We go to the right" << RESET << endl;
+    bool moved = false;
     for (int i = GRID_SIZE - 1; i >= 0; i--)
     {
         int new_index = GRID_SIZE - 1;
@@ -148,16 +136,19 @@ void Game::right()
                 if (new_index != j)
                 {
                     grille[i][j] = 0;
+                    moved = true;
                 }
                 new_index--;
             }
         }
     }
+
+    return moved;
 }
 
 void Game::mergedUp()
 {
-    up();
+    bool moved = up();
     for (int i = 0; i < GRID_SIZE; i++)
     {
         for (int j = 0; j < GRID_SIZE - 1; j++)
@@ -169,13 +160,17 @@ void Game::mergedUp()
             }
         }
     }
-    up();
-    generateRandomNumberAndPutItOnGrid();
+
+    if(up())
+        moved = true;
+    if(moved)
+        generateRandomNumberAndPutItOnGrid();
 }
 
-void Game::up()
+bool Game::up()
 {
     cout << BOLDCYAN << "We go to the up" << RESET << endl;
+    bool moved = false;
     for (int i = 0; i < GRID_SIZE; i++)
     {
         int new_index = 0;
@@ -187,16 +182,19 @@ void Game::up()
                 if (new_index != j)
                 {
                     grille[j][i] = 0;
+                    moved = true;
                 }
                 new_index++;
             }
         }
     }
+
+    return moved;
 }
 
 void Game::mergedDown()
 {
-    down();
+    bool moved = down();
     for (int i = GRID_SIZE - 1; i >= 0; --i)
     {
         for (int j = GRID_SIZE - 1; j >= 0; --j)
@@ -208,13 +206,16 @@ void Game::mergedDown()
             }
         }
     }
-    down();
-    generateRandomNumberAndPutItOnGrid();
+    if(down())
+        moved = true;
+    if(moved)
+        generateRandomNumberAndPutItOnGrid();
 }
 
-void Game::down()
+bool Game::down()
 {
     cout << BOLDCYAN << "We go to the down" << RESET << endl;
+    bool moved = false;
     for (int i = GRID_SIZE - 1; i >= 0; i--)
     {
         int new_index = GRID_SIZE - 1;
@@ -226,11 +227,14 @@ void Game::down()
                 if (new_index != j)
                 {
                     grille[j][i] = 0;
+                    moved = true;
                 }
                 new_index--;
             }
         }
     }
+
+    return moved;
 }
 
 void Game::generateRandomNumberAndPutItOnGrid()
@@ -285,27 +289,3 @@ bool Game::checkLoose()
     }
     return true;
 }
-
-/*
-bool Game::mergedLeft()
-{
-    bool moved = false; // Variable pour suivre si un mouvement a eu lieu
-    left();
-    for (int i = 0; i < GRID_SIZE; ++i)
-    {
-        for (int j = 0; j < GRID_SIZE - 1; ++j)
-        {
-            if (grille[i][j] != 0 && grille[i][j] == grille[i][j + 1])
-            {
-                grille[i][j] *= 2;
-                grille[i][j + 1] = 0;
-                moved = true; // Un mouvement a eu lieu
-            }
-        }
-    }
-    left();
-    // Vérifiez si un mouvement a eu lieu dans la méthode left
-    return moved || (/* condition pour vérifier si quelque chose a été déplacé dans left() );
-}
-
-*/
