@@ -72,6 +72,8 @@ void Game::mergedLeft()
         moved = true;
     if (moved)
         generateRandomNumberAndPutItOnGrid();
+    else
+        cout << BOLDRED << "No move possible" << RESET << endl;
 }
 
 bool Game::left()
@@ -106,19 +108,22 @@ void Game::mergedRight()
 
     for (int i = GRID_SIZE - 1; i >= 0; i--)
     {
-        for (int j = GRID_SIZE - 1; j >= 0; j--)
+        for (int j = GRID_SIZE - 1; j > 0; j--)
         {
             if (grille[i][j] != 0 && grille[i][j] == grille[i][j - 1])
             {
                 grille[i][j] *= 2;
                 grille[i][j - 1] = 0;
+                moved = true;
             }
         }
     }
-    if(right())
+    if (right())
         moved = true;
-    if(moved)    
+    if (moved)
         generateRandomNumberAndPutItOnGrid();
+    else
+        cout << BOLDRED << "No move possible" << RESET << endl;
 }
 
 bool Game::right()
@@ -157,14 +162,17 @@ void Game::mergedUp()
             {
                 grille[j][i] *= 2;
                 grille[j + 1][i] = 0;
+                moved = true;
             }
         }
     }
 
-    if(up())
+    if (up())
         moved = true;
-    if(moved)
+    if (moved)
         generateRandomNumberAndPutItOnGrid();
+    else
+        cout << BOLDRED << "No move possible" << RESET << endl;
 }
 
 bool Game::up()
@@ -197,19 +205,22 @@ void Game::mergedDown()
     bool moved = down();
     for (int i = GRID_SIZE - 1; i >= 0; --i)
     {
-        for (int j = GRID_SIZE - 1; j >= 0; --j)
+        for (int j = GRID_SIZE - 1; j > 0; --j)
         {
             if (grille[j][i] != 0 && grille[j][i] == grille[j - 1][i])
             {
                 grille[j][i] *= 2;
                 grille[j - 1][i] = 0;
+                moved = true;
             }
         }
     }
-    if(down())
+    if (down())
         moved = true;
-    if(moved)
+    if (moved)
         generateRandomNumberAndPutItOnGrid();
+    else
+        cout << BOLDRED << "No move possible" << RESET << endl;
 }
 
 bool Game::down()

@@ -11,17 +11,17 @@ int main()
         cout << game;
         std::cout << "Entrez une direction (z: haut, s: bas, q: gauche, d: droite) ou '!' pour quitter : ";
         cin >> x;
+        game.makeMove(static_cast<int>(x));
         if (game.checkLoose())
         {
-            cout << "You loose !!" << endl;
+            cout << BOLDRED << "You loose !!" << RESET << endl;
             break;
         }
         if (game.checkWin())
         {
-            cout << "You WIN !!" << endl;
+            cout << BOLDGREEN << "You WIN !!" << RESET << endl;
             break;
         }
-        game.makeMove(static_cast<int>(x));
     }
 
     return 0;
