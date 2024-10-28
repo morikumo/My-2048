@@ -9,8 +9,9 @@ int main()
     while (x != '!')
     {
         cout << game;
-        std::cout << "Entrez une direction (z: haut, s: bas, q: gauche, d: droite) ou '!' pour quitter : ";
-        cin >> x;
+        std::cout << "Entrez une direction (z: haut, s: bas, q: gauche, d: droite) ou '!' pour quitter : " ;;
+        x = game.getche();
+        cout << "\n";
         game.makeMove(static_cast<int>(x));
         if (game.checkLoose())
         {

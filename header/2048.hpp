@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 #include <iomanip> // Pour std::setw
+#include <termios.h>
+#include <cstdio>
 
 #define RESET "\033[0m"
 #define BLACK "\033[30m"              /* Black */
@@ -47,6 +49,8 @@ public:
     void makeMove(const int direction);
     bool checkWin();
     bool checkLoose();
+    char getch();
+    char getche();
     friend std::ostream &operator<<(ostream &out, const Game &grid);
 
 private:
@@ -59,6 +63,9 @@ private:
     bool right();
     void mergedRight();
     void generateRandomNumberAndPutItOnGrid();
+    void initTermios(bool echo);
+    void resetTermios();
+    char getch_(bool echo);
     vector<vector<int>> grille;
 };
 
