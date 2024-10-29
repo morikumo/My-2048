@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <iomanip> // Pour std::setw
+#include <iomanip>
 #include <termios.h>
 #include <cstdio>
 
